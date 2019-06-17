@@ -1,0 +1,132 @@
+﻿@model RicksWebWorld.ViewModels.HomeViewModel
+
+@{
+	ViewData["Title"] = "Productoverview";
+}
+
+<section class="product-content">
+	<div class="container">
+		<section class="search">
+			<div class="col-md-12">
+				<div class="row">
+					<input class="search-field" id="searchString" placeholder="Uw zoekwoord" />
+					<button class="button" id="searchbtn">Search</button>
+				</div>
+			</div>
+		</section>
+
+		<div class="row">
+			<div class="col-md-3">
+				<div class="product-sidemenu">
+					<h2 class="productoverview">Categories</h2>
+					<div id="filtercategories">
+						@{
+							foreach (var SingleCategory in Model.ListOfCategories)
+							{
+								<input type="checkbox" name="selectedcategory" class="categoryselect" value="@SingleCategory.CategoryName" />
+								<p>@SingleCategory.CategoryName</p>
+							}
+						}
+					</div>
+				</div>
+
+			</div>
+			<div class="col-md-9">
+				<div class="row">
+					<div class="productlist" id="productlist">
+						@{
+							var i = 0;
+						}
+						@foreach (var SingleProduct in Model.ListOfProducts)
+						{
+							<div class="col-md-12">
+								<div class="product @SingleProduct.ProductName">
+									<div class="img-container">
+										<a asp-action="Single" asp-controller="Home" asp-route-selectedProduct="@SingleProduct.ProductId">
+											<img src="~/images/products/@SingleProduct.ImageUrl">
+										</a>
+									</div>
+									<div class="product-info">
+
+										@if (SingleProduct.IsSpecialOffer == true && DateTime.Compare(SingleProduct.OfferEnd, DateTime.Now) > 0 && DateTime.Compare(SingleProduct.OfferStart, DateTime.Now) < 0)
+										{
+											<div class="box">
+												<div class="ribbon"><span>SPECIAL OFFER</span></div>
+											</div>
+										}
+
+										<div class="product-content">
+											<h2 class="producttitle">@SingleProduct.ProductName</h2>
+											<p>@SingleProduct.ProductDesc</p>
+											<ul>
+												@foreach (var SingleCategory in SingleProduct.ProductCategories)
+												{
+													<li>@SingleCategory.CategoryName</li>
+												}
+											</ul>
+
+											<div class="buttons">
+
+												@if (Model.UserLoggedIn == null)
+												{
+													<a class="button add @i" href="@Url.Action("Add", "Cart", new {Product = SingleProduct.ProductId, order = false})">Add to cart</a>
+													<a asp-controller="Home" asp-action="AddRemoveItemWishlist" class="button add @i">Add to wishlist</a>
+												}
+												else
+												{
+													<div class="dialog @i" title="Added to cart">
+														<h2 class="h2-modal">@SingleProduct.ProductName has been added to your cart!</h2>
+														<a href="@Url.Action("Add", "Cart", new {Product = SingleProduct.ProductId, order = false})">Continue shopping</a>
+														<a href="@Url.Action("Add", "Cart", new {Product = SingleProduct.ProductId, order = true})" class="modelbtn-order">Order</a>
+													</div>
+
+													<a class="button add @i">Add to cart</a>
+
+													var containsItem = Model.UserLoggedIn.Wishlist.Any(item => item.ProductName == SingleProduct.ProductName);
+													if (containsItem)
+													{
+														<form asp-action="AddRemoveItemWishlist" asp-controller="Home">
+															<input type="hidden" name="product" value="@SingleProduct.ProductId" />
+															<button type="submit" class="button remove">Remove from wishlist</button>
+														</form>
+													}
+													else
+													{
+														<form asp-action="AddRemoveItemWishlist" asp-controller="Home">
+															<input type="hidden" name="product" value="@SingleProduct.ProductId" />
+															<button type="submit" class="button add">Add to wishlist</button>
+														</form>
+													}
+												}
+
+											
+												@if (SingleProduct.ProductDiscount < SingleProduct.ProductPrice)
+												{
+													<span class="button pricetagdenied" id="price">$@SingleProduct.ProductPrice</span>
+													<span class="button pricetagdiscount">$@SingleProduct.ProductDiscount</span>
+												}
+												else
+												{
+													<span class="button" id="price">$@SingleProduct.ProductPrice</span>
+												}
+												
+
+												@if (SingleProduct.IsSpecialOffer && DateTime.Compare(SingleProduct.OfferEnd, DateTime.Now) > 0 && DateTime.Compare(SingleProduct.OfferStart, DateTime.Now) < 0)
+												{
+													<span class="button pricetagspecialoffer">$@SingleProduct.OfferPrice until @SingleProduct.OfferEnd.ToString("dd/MM/yyyy")</span>
+												}
+
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							i++;
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</section>

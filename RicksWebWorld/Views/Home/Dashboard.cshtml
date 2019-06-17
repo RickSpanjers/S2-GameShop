@@ -1,0 +1,195 @@
+﻿@{
+	ViewBag.Title = "Dashboard";
+	Layout = "~/Views/Shared/_BackendLayout.cshtml";
+}
+@model RicksWebWorld.ViewModels.DashboardViewModel
+
+<section class="main-content">
+	<h1 class="page-title">Dashboard RicksWebWorld</h1>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="status-block">
+						<div class="status-upper">
+							<div class="content-left">
+								<p class="count green">@Model.ProductList Products</p>
+								<h2 class="status-title green-sharp">RicksWebWorld</h2>
+							</div>
+							<div class="icon-right">
+								<i class="fa fa-gamepad"></i>
+							</div>
+						</div>
+						<div class="status-lower">
+							<div class="progress-info">
+								<div class="progress">
+									<span style="width: 45%;" class="progress-bar progress-bar-success green-sharp">
+										<span class="sr-only">45% progress</span>
+									</span>
+								</div>
+								<div class="status">
+									<div class="progress-title"> progress </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="status-block">
+						<div class="status-upper">
+							<div class="content-left">
+								<p class="count red">@Model.UserList Users</p>
+								<h2 class="status-title">RicksWebWorld</h2>
+							</div>
+							<div class="icon-right">
+								<i class="fa fa-users"></i>
+							</div>
+						</div>
+						<div class="status-lower">
+							<div class="progress-info">
+								<div class="progress">
+									<span style="width: 35%;" class="progress-bar progress-bar-success red">
+										<span class="sr-only">35% progress</span>
+									</span>
+								</div>
+								<div class="status">
+									<div class="progress-title"> progress </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="status-block">
+						<div class="status-upper">
+							<div class="content-left">
+								<p class="count blue">@Model.RoleList Roles</p>
+								<h2 class="status-title">RicksWebWorld</h2>
+							</div>
+							<div class="icon-right">
+								<i class="fa fa-user"></i>
+							</div>
+						</div>
+						<div class="status-lower">
+							<div class="progress-info">
+								<div class="progress">
+									<span style="width: 45%;" class="progress-bar progress-bar-success blue">
+										<span class="sr-only">45% progress</span>
+									</span>
+								</div>
+								<div class="status">
+									<div class="progress-title"> progress </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="status-block">
+						<div class="status-upper">
+							<div class="content-left">
+								<p class="count purple">@Model.PermissionList Permissions</p>
+								<h2 class="status-title">RicksWebWorld</h2>
+							</div>
+							<div class="icon-right">
+								<i class="fa fa-edit"></i>
+							</div>
+						</div>
+						<div class="status-lower">
+							<div class="progress-info">
+								<div class="progress">
+									<span style="width: 45%;" class="progress-bar progress-bar-success purple">
+										<span class="sr-only">45% progress</span>
+									</span>
+								</div>
+								<div class="status">
+									<div class="progress-title"> progress </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					<div class="status-block">
+						<div class="status-upper">
+							<div class="content-left">
+								<p class="count orange">@Model.CategoryList Categories</p>
+								<h2 class="status-title">RicksWebWorld</h2>
+							</div>
+							<div class="icon-right">
+								<i class="fa fa-pencil"></i>
+							</div>
+						</div>
+						<div class="status-lower">
+							<div class="progress-info">
+								<div class="progress">
+									<span style="width: 45%;" class="progress-bar progress-bar-success orange">
+										<span class="sr-only">45% progress</span>
+									</span>
+								</div>
+								<div class="status">
+									<div class="progress-title"> progress </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="status-block">
+						<div class="status-upper">
+							<div class="content-left">
+								<p class="count darkblue">@Model.OrderList Orders</p>
+								<h2 class="status-title">RicksWebWorld</h2>
+							</div>
+							<div class="icon-right">
+								<i class="fa fa-shopping-cart"></i>
+							</div>
+						</div>
+						<div class="status-lower">
+							<div class="progress-info">
+								<div class="progress">
+									<span style="width: 45%;" class="progress-bar progress-bar-success darkblue">
+										<span class="sr-only">45% progress</span>
+									</span>
+								</div>
+								<div class="status">
+									<div class="progress-title"> progress </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="status-block">
+						<div class="status-upper">
+							<div class="content-left">
+								<p class="count webworld">@Model.ProductsSold Products Sold</p>
+								<h2 class="status-title">RicksWebWorld</h2>
+							</div>
+							<div class="icon-right">
+								<i class="fa fa-chevron-circle-up"></i>
+							</div>
+						</div>
+						<div class="status-lower">
+							<div class="progress-info">
+								<div class="progress">
+									<span style="width: 10%;" class="progress-bar progress-bar-success webworld">
+										<span class="sr-only">10% progress</span>
+									</span>
+								</div>
+								<div class="status">
+									<div class="progress-title"> progress </div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

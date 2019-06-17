@@ -1,0 +1,37 @@
+﻿@model RicksWebWorld.ViewModels.ContactMailViewModel
+@{
+	ViewData["Title"] = "AboutUs";
+}
+
+<section class="about-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8">
+				<h1>Over ons</h1>
+				<p>Nullam pellentesque maximus condimentum. Donec eleifend, sapien commodo pellentesque ultricies, tortor nisi dignissim metus, sed mollis velit dolor in libero. Sed fermentum iaculis felis. Donec ornare gravida lacinia. Vivamus nec tincidunt elit. </p>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc congue libero eu elementum tristique. Phasellus eu maximus lacus, at ultricies nulla.</p>
+				<p>Nullam pellentesque maximus condimentum. Donec eleifend, sapien commodo pellentesque ultricies, tortor nisi dignissim metus, sed mollis velit dolor in libero. Sed fermentum iaculis felis. Donec ornare gravida lacinia. Vivamus nec tincidunt elit. </p>
+			</div>
+			<div class="col-md-4">
+				<div class="contact-sidebar">
+					<h2>Contact us</h2>
+					<form asp-action="SendContactMailAsync" asp-controller="Mail">
+						<input asp-for="FullName" placeholder="Name" class="aboutusinput" />
+						<span asp-validation-for="FullName" class="text-danger"></span>
+
+						<input asp-for="Email" placeholder="E-mail" class="aboutusinput" />
+						<span asp-validation-for="Email" class="text-danger"></span>
+
+						<textarea asp-for="Details" class="aboutustextarea" placeholder="Message"></textarea>
+						<span asp-validation-for="Details" class="text-danger"></span>
+						<button type="submit" class="btn btn-primary btn-login">Send</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+@section Scripts {
+	@await Html.PartialAsync("_ValidationScriptsPartial")
+}

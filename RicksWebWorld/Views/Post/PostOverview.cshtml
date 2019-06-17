@@ -1,0 +1,46 @@
+﻿@{
+	ViewData["Title"] = "PageOverview";
+	Layout = "~/Views/Shared/_BackendLayout.cshtml";
+}
+
+@model RicksWebWorld.ViewModels.PostOverviewViewModel ;
+
+<section class="main-content useroverview">
+	<h1 class="page-title">WebWorld Posts</h1>
+	<div class="user-options">
+		<a asp-action="Single" asp-controller="Post">New Post</a>
+	</div>
+	<div class="listofusers">
+		<div class="row">
+			<div class="col-md-12">
+				@foreach (var singlepage in Model.PostsInSystem)
+				{
+					<div class="single-user-order">
+						<div class="col-md-12">
+							<form asp-controller="Post" asp-action="SingleEdit" method="post">
+								<div class="userlist second">
+									<div class="row">
+										<div class="col-md-12">
+											<p class="sort-id">@singlepage.Title</p>
+										</div>
+									</div>
+
+									<input type="hidden" name="pageToEdit" value="@singlepage.Id" />
+								</div>
+								<div class="userlist third">
+									<button type="submit" class="btn-reverse">Edit</button>
+								</div>
+							</form>
+							<form asp-controller="Post" asp-action="Delete" method="post">
+								<div class="userlist fourth">
+									<input type="hidden" name="pageToDelete" value="@singlepage.Id" />
+									<button type="submit" class="btn-reverse">Delete</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+</section>

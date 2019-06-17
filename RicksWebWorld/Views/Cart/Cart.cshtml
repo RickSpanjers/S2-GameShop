@@ -1,0 +1,93 @@
+﻿@model RicksWebWorld.ViewModels.UserViewModel
+
+@{
+	ViewData["Title"] = "Cart";
+}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<section class="shopping-cart">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="shopping-cart">
+					<div class="column-labels">
+						<label class="product-image">Image</label>
+						<label class="product-details">Product</label>
+						<label class="product-price">Price</label>
+						<label class="product-quantity">Quantity</label>
+						<label class="product-line-price">Total</label>
+						<label class="product-removal">Remove</label>
+					</div>
+					@if (Model == null)
+					{
+						//Show no products since there are none
+					}
+					else
+					{
+						int i = 0;
+
+						foreach (var singleproduct in Model.ShoppingCart.ItemsInCart)
+						{
+							<div class="product @i">
+								<div class="product-image">
+									<img src="~/images/products/@singleproduct.Product.ImageUrl">
+								</div>
+								<div class="product-details">
+									<div class="product-title-cart">@singleproduct.Product.ProductName</div>
+									<p class="product-description">@singleproduct.Product.ProductDesc</p>
+								</div>
+								<div class="product-price">@singleproduct.CurrentPrice()</div>
+								<div class="product-quantity">
+									<input type="number" value="@singleproduct.Quantity" min="1">
+								</div>
+								<div class="product-line-price">
+									<div class="product-price">@singleproduct.FullPriceQuantity()</div>
+								</div>
+								<div class="product-removal">
+									<p class="btn btn-danger btn-sm removefromcart">
+										<i class="fa fa-trash-o"></i>
+									</p>
+								</div>
+
+								<div id="dialog-confirm" class="item-@i" title="Remove this item from cart?">
+									<p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>This item will be deleted from your cart. Are you sure?</p>
+									<a class="modelbtn-order" href="@Url.Action("Remove", "Cart", new {Item = singleproduct.Product.ProductId})">Delete item</a>
+								</div>
+							</div>
+
+							i++;
+						}
+					}
+
+					<div class="totals">
+						<div class="totals-item">
+							<label>Subtotal</label>
+							<div class="totals-value" id="cart-subtotal">
+								<p>@Model.ShoppingCart.Subtotal()</p>
+							</div>
+						</div>
+						<div class="totals-item">
+							<label>Tax (21%)</label>
+							<div class="totals-value" id="cart-tax">@Model.ShoppingCart.BTW()</div>
+						</div>
+						<div class="totals-item">
+							<label>Shipping</label>
+							<div class="totals-value" id="cart-shipping">$4.50</div>
+						</div>
+						<div class="totals-item totals-item-total">
+							<label>Grand Total</label>
+							<div class="totals-value" id="cart-total">@Model.ShoppingCart.GrandTotal()</div>
+						</div>
+					</div>
+
+					<a asp-action="Products" asp-controller="Home" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a>
+					<a asp-action="Checkout" asp-controller="Cart" class="checkout">Checkout</a>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+</section>

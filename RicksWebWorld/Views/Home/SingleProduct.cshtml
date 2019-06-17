@@ -1,0 +1,47 @@
+﻿@model RicksWebWorld.ViewModels.ProductViewModel
+@{
+	ViewData["Title"] = "SingleProduct";
+}
+
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,700" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+<section class="main-content">
+	<div class="wrapper">
+		<div class="product group">
+			<div class="col-md-6 product-image">
+				<img src="~/images/products/@Model.ImageUrl"/>
+			</div>
+			<div class="col-md-6 product-info">
+				<h1>@Model.ProductName</h1>
+				<h2>@Model.ProductPrice</h2>
+				<div class="select-dropdown">
+					<select asp-for="AmountToOrder" class="amountofproducts">
+						@for(int i = 1; i < Model.ProductAmount; i++)
+						{
+							<option value="@i">@i</option>	
+						}
+					</select>
+				</div>
+				<br>
+
+				<form asp-action="Add" asp-controller="Cart" asp-route-Order="false" asp-route-Product="@Model.ProductId">
+					<button type="submit" class="add-btn">Add to cart</button>
+				</form>
+
+				<p>@Model.ProductDesc</p>
+
+				<ul>
+					<li>Great game</li>
+					<li>You should totally buy it</li>
+					<li>It can be a bit much at the start but you will be fine</li>
+				</ul>
+
+				<a href="" class="share-link">Tweet</a>
+				<a href="" class="share-link">Like</a>
+				<a href="" class="share-link">Pin</a>
+				<a href="" class="share-link">Email</a>
+			</div>
+		</div>
+	</div>
+</section>

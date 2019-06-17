@@ -1,0 +1,113 @@
+﻿@{
+	ViewData["Title"] = "SinglePost";
+	Layout = "~/Views/Shared/_BackendLayout.cshtml";
+}
+
+<!-- ViewModel-->
+@model RicksWebWorld.ViewModels.PostViewModel;
+
+<section class="main-content singleproduct">
+	@if (Model.Id == 0)
+	{
+		<h1 class="page-title">Add new post</h1>
+	}
+	else
+	{
+		<h1 class="page-title">Update post</h1>
+	}
+
+	<div class="row">
+		@if (Model.Id == 0)
+		{
+			<form asp-controller="Post" asp-action="Add" method="post">
+				<div class="col-md-8">
+					<div class="form-group">
+						<label>Post Title</label>
+						<input asp-for="Title" placeholder="Post Title" />
+						<span asp-validation-for="Title" class="text-danger"></span>
+					</div>
+
+					<div class="form-group">
+						<label>Post Content</label>
+						<textarea asp-for="Content" placeholder="Content" id="editor"></textarea>
+						<span asp-validation-for="Content" class="text-danger"></span>
+					</div>
+
+					<div class="form-group">
+						<label>Post Excerpt</label>
+						<textarea asp-for="Excerpt" placeholder="Excerpt"></textarea>
+						<span asp-validation-for="Excerpt" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<button type="submit" class="addproduct">Create new post</button>
+
+					<div class="form-group">
+						<label>Post Status</label>
+						<select asp-for="Status">
+							<option value="0">Concept</option>
+							<option value="1">Published</option>
+						</select>
+						<span asp-validation-for="Status" class="text-danger"></span>
+					</div>
+
+					<div class="form-group">
+						<label>Post Thumbnail</label>
+						<input type="file" class="form-control-file" name="UploadedImage" />
+						<p>No image saved to post yet</p>
+					</div>
+				</div>
+			</form>
+		}
+		else
+		{
+			<form asp-controller="Post" asp-action="Update" method="post">
+
+				<div class="col-md-8">
+					<div class="form-group">
+						<label>Post Title</label>
+						<input asp-for="Title" placeholder="Username" />
+						<span asp-validation-for="Title" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label>Post Content</label>
+						<textarea asp-for="Content" placeholder="Content" id="editor">@Model.Content</textarea>
+						<span asp-validation-for="Content" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label>Post Excerpt</label>
+						<textarea asp-for="Excerpt" placeholder="Excerpt"></textarea>
+						<span asp-validation-for="Excerpt" class="text-danger"></span>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<button type="submit" class="addproduct">Update post</button>
+
+					<div class="form-group">
+						<input type="hidden" name="pageToEdit" value="@Model.Id" />
+						<label>Post Status</label>
+						<select asp-for="Status">
+							<option value="0">Concept</option>
+							<option value="1">Published</option>
+						</select>
+						<span asp-validation-for="Status" class="text-danger"></span>
+					</div>
+
+					<div class="form-group">
+						<label>Post Thumbnail</label>
+						<input type="file" class="form-control-file" name="UploadedImage" />
+					</div>
+
+					<h2 class="page-title">Current image</h2>
+					<img class="blogimage-thumbnail" src="~/images/blog/@Model.PostImage" />
+				</div>
+			</form>
+		}
+	</div>
+</section>
+
+
+@section Scripts {
+	@await Html.PartialAsync("_ValidationScriptsPartial")
+}
+

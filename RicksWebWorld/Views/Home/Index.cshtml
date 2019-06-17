@@ -1,0 +1,286 @@
+﻿@model RicksWebWorld.ViewModels.HomeViewModel
+@{
+	ViewBag.Title = "HomePage";
+}
+
+<section class="section_banner">
+	<div class="banner_slider">
+		<div class="page_banner Aligner" style="background-image: url('/images/banner_home2.jpg');">
+			<div class="container">
+				<div class="col-md-6">
+					<h1 class="header">RicksWebWorld</h1>
+					<p class="header">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis accumsan vitae risus feugiat egestas. Nam leo purus, elementum viverra eros sed, fermentum euismod sem. Etiam lacinia eu turpis sit amet finibus. Donec sodales erat nulla, sit amet finibus neque vestibulum at. Quisque pulvinar dui et leo accumsan, eget vehicula massa mollis.</p>
+					<a href="#" class="bannerbtn" title="Lees meer">Lees meer</a> <a href="#" class="bannerbtn" title="Lees meer">Lees meer</a>
+				</div>
+				<div class="col-md-6">
+
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="product_categories">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4">
+				<div class="imagepreview">
+					<img src="~/images/feature-2.png" class="categoryimghome" />
+				</div>
+				<h2 class="categorytitle">Find the oldest to the newest games</h2>
+				<p class="summary">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis accumsan vitae risus feugiat egestas. Nam leo purus, elementum viverra eros sed, fermentum euismod sem. Etiam lacinia eu turpis sit amet finibus. Donec sodales erat nulla, sit amet finibus neque vestibulum at.</p>
+			</div>
+			<div class="col-md-4">
+				<div class="imagepreview">
+					<img src="~/images/feature-3.png" class="categoryimghome" />
+				</div>
+				<h2 class="categorytitle">Reaching even the rising mobile gamer</h2>
+				<p class="summary">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis accumsan vitae risus feugiat egestas. Nam leo purus, elementum viverra eros sed, fermentum euismod sem. Etiam lacinia eu turpis sit amet finibus. Donec sodales erat nulla, sit amet finibus neque vestibulum at.</p>
+			</div>
+			<div class="col-md-4">
+				<div class="imagepreview">
+					<img src="~/images/feature-1.png" class="categoryimghome" />
+				</div>
+				<h2 class="categorytitle">Find PCs, consoles and even handhelds</h2>
+				<p class="summary">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis accumsan vitae risus feugiat egestas. Nam leo purus, elementum viverra eros sed, fermentum euismod sem. Etiam lacinia eu turpis sit amet finibus. Donec sodales erat nulla, sit amet finibus neque vestibulum at.</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<section class="parallax-section">
+	<div class=" image-block parallax" data-speed=".5">
+		<div class="col-md-1">
+		</div>
+		<div class="col-md-5">
+			<h1>GOD OF WAR PS4</h1>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+			<p>Donec enim urna, dapibus blandit sollicitudin eget, consequat eget purus. </p>
+			<p>Fusce mattis porta metus eu aliquam. In accumsan pharetra tortor.</p>
+			<p>Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+			<a asp-action="Products" asp-controller="Home" class="button add">Order now!</a>
+		</div>
+		<div class="col-md-5">
+			<div class="animated infinite pulse">
+				<img src="~/images/GodOfWarGames.png" />
+			</div>
+		</div>
+		<div class="col-md-1">
+
+		</div>
+	</div>
+</section>
+
+<section class="section-games animated bounceIn">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h2>Platforms and games</h2>
+				<p class="subtitle">Lorem ipsum dolor sit amet, consectetur adipiscing elit Donec enim urna, dapibus blandit sollicitudin eget, consequat eget purus.</p>
+			</div>
+			<div class="col-md-4">
+				<div class="single-subject">
+					<h3 class="green">XBOX One</h3>
+					<div class="row">
+						<div class="col-md-6">
+							<img src="~/images/xboxone.png" />
+						</div>
+						<div class="col-md-6">
+							<p class="fromprice">From</p>
+							<p class="price">$197.99</p>
+							<a class="green" href="#">Buy it now</a>
+							<a asp-action="Products" asp-controller="Home" class="black">Shop accessories</a>
+						</div>
+					</div>
+				</div>
+				<hr />
+				<div class="gameslist">
+					@{
+						int c1 = 0;
+						@foreach (var item in Model.ListOfProducts)
+						{
+							if (c1 < 3)
+							{
+								var containsItem = item.ProductCategories.Any(i => i.CategoryName == "XBOX One");
+								if (containsItem)
+								{
+									<div class="row">
+										<div class="single-example-product">
+											<div class="col-md-4">
+												<img src="~/images/boxart/xboxone/@item.ImageUrl" />
+											</div>
+											<div class="col-md-8">
+												<a asp-action="Single" asp-controller="Home" asp-route-selectedProduct="@item.ProductId">@item.ProductName</a>
+												<p class="subcategory">XBOX One</p>
+												<p class="gameprice">@item.ProductPrice</p>
+											</div>
+										</div>
+									</div>
+									c1++;
+								}
+							}
+						}
+					}
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="single-subject">
+					<h3 class="orange">PS4</h3>
+					<div class="row">
+						<div class="col-md-6">
+							<img src="~/images/ps4.png" />
+						</div>
+						<div class="col-md-6">
+							<p class="fromprice">From</p>
+							<p class="price">$299.99</p>
+							<a class="orange" href="#">Buy it now</a>
+							<a asp-action="Products" asp-controller="Home" class="black">Shop accessories</a>
+						</div>
+					</div>
+				</div>
+				<hr />
+				<div class="gameslist">
+					@{
+						int c2 = 0;
+						foreach (var item in Model.ListOfProducts)
+						{
+							if (c2 < 3)
+							{
+								var containsItem = item.ProductCategories.Any(i => i.CategoryName == "PS4");
+								if (containsItem)
+								{
+									<div class="row">
+										<div class="single-example-product">
+											<div class="col-md-4">
+												<img src="~/images/boxart/ps4/@item.ImageUrl" />
+											</div>
+											<div class="col-md-8">
+												<a asp-action="Single" asp-controller="Home" asp-route-selectedProduct="@item.ProductId">@item.ProductName</a>
+												<p class="subcategory">PS4</p>
+												<p class="gameprice">@item.ProductPrice</p>
+											</div>
+										</div>
+									</div>
+									c2++;
+								}
+							}
+						}
+					}
+
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="single-subject">
+					<h3 class="blue">Nintendo Switch</h3>
+					<div class="row">
+						<div class="col-md-6">
+							<img src="~/images/nintendoswitch.png" />
+						</div>
+						<div class="col-md-6">
+							<p class="fromprice">From</p>
+							<p class="price">$244,99</p>
+							<a class="blue" href="#">Buy it now</a>
+							<a asp-action="Products" asp-controller="Home" class="black">Shop accessories</a>
+						</div>
+					</div>
+				</div>
+				<hr />
+				@{
+					int c3 = 0;
+					foreach (var item in Model.ListOfProducts)
+					{
+						if (c3 < 3)
+						{
+							var containsItem = item.ProductCategories.Any(i => i.CategoryName == "Nintendo Switch");
+							if (containsItem)
+							{
+								<div class="row">
+									<div class="single-example-product">
+										<div class="col-md-4">
+											<img src="~/images/boxart/switch/@item.ImageUrl" />
+										</div>
+										<div class="col-md-8">
+											<a asp-action="Single" asp-controller="Home" asp-route-selectedProduct="@item.ProductId">@item.ProductName</a>
+											<p class="subcategory">Nintendo Switch</p>
+											<p class="gameprice">@item.ProductPrice</p>
+										</div>
+									</div>
+								</div>
+								c3++;
+							}
+						}
+					}
+				}
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<section class="company-slider">
+	<div class="slideshow">
+		<div class="single-item">
+			<img src="~/images/companies/Atari.jpg" />
+		</div>
+		<div class="single-item">
+			<img src="~/images/companies/Microsoft.jpg" />
+		</div>
+		<div class="single-item">
+			<img src="~/images/companies/Nintendo.jpg" />
+		</div>
+		<div class="single-item">
+			<img src="~/images/companies//Ps3.jpg" />
+		</div>
+		<div class="single-item">
+			<img src="~/images//companies/Ps4.jpg" />
+		</div>
+		<div class="single-item">
+			<img src="~/images/companies/Sony.jpg" />
+		</div>
+		<div class="single-item">
+			<img src="~/images/companies/XboxOne.jpg" />
+		</div>
+	</div>
+</section>
+
+<section class="blog-footer">
+	<div class="container">
+		<h2 class="blog-footer">Latest news in the gaming industry</h2>
+		<p class="subtext">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis accumsan vitae risus feugiat egestas.</p>
+		<div class="row">
+			@{
+				var posts = Model.PostsInSystem;
+				posts.Sort((x, y) => y.Postdate.CompareTo(x.Postdate));
+				int count = 1;
+			}
+			@foreach (var p in posts)
+			{
+				if (count <= 3)
+				{
+					<div class="col-md-4">
+						<img src="~/images/blog/@p.PostImage" />
+						<h3>@p.Title</h3>
+						<p class="blog-description">@p.Excerpt</p>
+						<p class="written-on">@p.Postdate</p>
+					</div>
+					count++;
+				}
+
+			}
+		</div>
+	</div>
+</section>
+
+<script type="text/javascript">
+	//Slick slider homepage companies
+
+	$('.slideshow').slick({
+		slidesToShow: 6,
+		slidesToScroll: 1,
+		autoplay: true,
+		autoplaySpeed: 2000,
+		buttons: false,
+	});
+
+</script>

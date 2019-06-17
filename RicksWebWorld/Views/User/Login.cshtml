@@ -1,0 +1,31 @@
+﻿@using RicksWebWorld.ViewModels
+@{
+	ViewBag.Title = "Login";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model RicksWebWorld.ViewModels.LoginViewModel;
+
+<div class="container">
+	<div class="wrapper">
+		<div class="form-signin">
+			<h3 class="form-signin-heading">Welcome Back! Please Sign In</h3>
+			<hr class="colorgraph"><br>
+
+			<form asp-controller="User" asp-action="Login" method="post">
+				<input type="text" asp-for="Username" placeholder="Username" class="input-login" />
+				<span asp-validation-for="Username" class="text-danger"></span>
+				<input type="password" asp-for="Password" placeholder="Password" class="input-login" />
+				<span asp-validation-for="Password" class="text-danger"></span>
+				<div class="noacccount">
+					<p><a asp-controller="User" asp-action="NewUser">No account yet? Make one here</a></p>
+					<p>Forgot your password? <a asp-controller="User" asp-action="ForgotPassword">Reset it here</a></p>
+				</div>
+				<button type="submit" class="btn btn-primary btn-login">Login</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	@await Html.PartialAsync("_ValidationScriptsPartial")
+}

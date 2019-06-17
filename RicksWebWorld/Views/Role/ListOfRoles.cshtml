@@ -1,0 +1,17 @@
+﻿@model RicksWebWorld.ViewModels.RoleViewModel
+@foreach (var singlerole in Model.AllRolesInSystem)
+{
+	<div class="single-category">
+		<div class="col-md-12">
+			<form asp-controller="Role" asp-action="OverviewEdit" method="post">
+				<input type="hidden" name="SelectedRole" value="@singlerole.RoleId" />
+				<p class="product-name">@singlerole.RoleName</p>
+				<button type="submit" class="btn_categoryedit btn-reverse">Edit</button>
+			</form>
+			<form asp-controller="Role" asp-action="Delete" method="post">
+				<input type="hidden" name="RoleToDelete" value="@singlerole.RoleId" />
+				<button class="btn_categorydelete btn-reverse" type="submit">Delete</button>
+			</form>
+		</div>
+	</div>
+}

@@ -1,0 +1,235 @@
+﻿@{
+	/*Viewbag and Layout */
+	ViewBag.Title = "SingleProduct";
+	Layout = "~/Views/Shared/_BackendLayout.cshtml";
+}
+
+<!-- ProductViewModel-->
+@model RicksWebWorld.ViewModels.ProductViewModel
+
+<section class="main-content singleproduct">
+
+	@if (Model.ProductName == null)
+	{
+		<h1 class="page-title">Add Product</h1>
+	}
+	else
+	{
+		<h1 class="page-title">Edit Product</h1>
+	}
+
+	<div class="row">
+
+		<!-- If there is no product sent from the ProductController we will make a new product-->
+		@if (Model.ProductName == null)
+		{
+			<form asp-controller="Product" asp-action="Add" method="post">
+				<div class="col-md-8">
+					<!-- Product name-->
+					<input type="text" asp-for="ProductName" placeholder="Name of Product" class="newuser" />
+					<span asp-validation-for="ProductName" class="text-danger"></span>
+
+					<!-- Product description-->
+					<h2 class="page-title">Description</h2>
+					<textarea asp-for="ProductDesc" class="productdesc"></textarea>
+					<span asp-validation-for="ProductDesc" class="text-danger"></span>
+
+					<!-- Image upload-->
+					<h2 class="page-title">Upload Image </h2>
+					<input type="file" name="UploadedImage" />
+
+					<h2 class="page-title">Revisions</h2>
+					<textarea name="revisies"></textarea>
+				</div>
+				<div class="col-md-4">
+					<!-- This button submits the form and goes to SaveProduct in ProductController-->
+					<button type="submit" class="saveproduct">Add Product</button>
+					<h2 class="productdetails">Product details</h2>
+
+					<!-- Product amount-->
+					<h3 class="productinfo">Amount</h3>
+					<input type="text" asp-for="ProductAmount" placeholder="Amount" class="newuser" />
+					<span asp-validation-for="ProductAmount" class="text-danger"></span>
+
+					<!-- Product Price-->
+					<h3 class="productinfo">Product price</h3>
+					<input type="text" asp-for="ProductPrice" placeholder="Price" class="newuser" />
+					<span asp-validation-for="ProductPrice" class="text-danger"></span>
+
+					<!-- Product Discount Price-->
+					<h3 class="productinfo">Discount price</h3>
+					<input type="text" asp-for="ProductDiscount" placeholder="Discount Price" class="newuser" />
+					<span asp-validation-for="ProductDiscount" class="text-danger"></span>
+
+					<!-- Product BTW-->
+					<h3 class="productinfo">BTW % on product</h3>
+					<input type="text" asp-for="BtwPercentage" placeholder="21%" class="newuser" />
+					<span asp-validation-for="BtwPercentage" class="text-danger"></span>
+
+					<!-- Product Status-->
+					<h3 class="productinfo">Status</h3>
+					<select asp-for="ProductStatus" class="newuser">
+						<option value="New" selected="selected">New</option>
+						<option value="Used">Used</option>
+					</select>
+
+					<!-- Is product for sale?-->
+					<h3 class="productinfo">In sale</h3>
+					<select asp-for="ProductInStock" class="newuser">
+						<option value="Yes" selected="selected">Yes</option>
+						<option value="No">No</option>
+					</select>
+
+					<!--Product acties-->
+					<h2 class="productdetails">Product Action</h2>
+
+					<div class="form-group">
+						<h3 class="productinfo">Actie start</h3>
+						<input asp-for="OfferStart" type="datetime-local" class="newuser" />
+						<span asp-validation-for="OfferStart" class="text-danger"></span>
+
+						<h3 class="productinfo">Actie end</h3>
+						<input asp-for="OfferEnd" type="datetime-local" class="newuser" />
+						<span asp-validation-for="OfferEnd" class="text-danger"></span>
+
+						<h3 class="productinfo">Action price</h3>
+						<input type="text" asp-for="OfferPrice" placeholder="Price" class="newuser" />
+						<span asp-validation-for="OfferPrice" class="text-danger"></span>
+					</div>
+
+					<!-- Categories to add to product-->
+					<h2 class="productdetails">Product categories</h2>
+					@{
+						foreach (var SingleCat in Model.ListOfAllCategories)
+						{
+							<input type="checkbox" name="SelectedCategory" value="@SingleCat.CategoryId" class="categoryselect" />
+							<p>@SingleCat.CategoryName</p>
+						}
+					}
+				</div>
+			</form>
+		}
+		else
+		{
+			<form asp-controller="Product" asp-action="Update" method="post">
+				<div class="col-md-8">
+					<input type="text" asp-for="ProductName" value="@Model.ProductName" class="newuser" />
+					<span asp-validation-for="ProductName" class="text-danger"></span>
+					<h2 class="page-title">Description</h2>
+					<textarea asp-for="ProductDesc" value="@Model.ProductDesc" class="productdesc"></textarea>
+					<span asp-validation-for="ProductDesc" class="text-danger"></span>
+					<!-- Image upload-->
+					<h2 class="page-title"> Upload Image</h2>
+					<input type="file" name="UploadedImage" />
+					<h2 class="page-title"> Current image</h2>
+					<img class="productimage-thumbnail" src="~/images/products/@Model.ImageUrl" />
+					<!-- Revisies-->
+					<h2 class="page-title">Revisions</h2>
+					<textarea name="revisies">@foreach (var singlerevision in Model.RevisionsInProduct)
+					{@Html.Raw(Model.ProductName + " - ")@singlerevision.RevisionDateTime@Html.Raw("\n")}</textarea>
+				</div>
+
+				<div class="col-md-4">
+					<button type="submit" class="saveproduct">Update Product</button>
+
+					<h2 class="productdetails">Product details</h2>
+					<input type="hidden" name="ProductToEdit" value="@Model.ProductId" />
+					<h3 class="productinfo">Amount</h3>
+
+					<input type="text" asp-for="ProductAmount" value="@Model.ProductAmount" class="newuser" />
+					<span asp-validation-for="ProductAmount" class="text-danger"></span>
+
+					<h3 class="productinfo">Product price</h3>
+					<input type="text" asp-for="ProductPrice" value="@Model.ProductPrice" class="newuser" />
+					<span asp-validation-for="ProductPrice" class="text-danger"></span>
+
+					<h3 class="productinfo">Discount price</h3>
+					<input type="text" asp-for="ProductDiscount" value="@Model.ProductDiscount" class="newuser" />
+					<span asp-validation-for="ProductDiscount" class="text-danger"></span>
+
+					<!-- Product BTW-->
+					<h3 class="productinfo">BTW % on product</h3>
+					<input type="text" asp-for="BtwPercentage" value="@Model.BtwPercentage" class="newuser" />
+					<span asp-validation-for="BtwPercentage" class="text-danger"></span>
+
+					<h3 class="productinfo">Status</h3>
+					<select asp-for="ProductStatus" class="newuser">
+						@if (Model.ProductStatus == "New")
+						{
+							<option value="New" selected="selected">New</option>
+							<option value="Used">Used</option>
+						}
+						else
+						{
+							<option value="New">New</option>
+							<option value="Used" selected="selected">Used</option>
+						}
+					</select>
+					<h3 class="productinfo">In sale</h3>
+					<select asp-for="ProductInStock" class="newuser">
+						@if (Model.ProductInStock == "Yes")
+						{
+							<option value="Yes" selected="selected">Yes</option>
+
+							<option value="No">No</option>
+						}
+						else
+						{
+							<option value="Yes">Yes</option>
+							<option value="No" selected="selected">No</option>
+						}
+
+					</select>
+					<!--Product acties-->
+					<h2 class="productdetails">Product Action</h2>
+					@if (Model.OfferPrice != 0)
+					{
+						<div class="form-group">
+							<h3 class="productinfo">Action Start</h3>
+							<input asp-for="OfferStart" type="datetime-local" class="newuser" />
+							<span asp-validation-for="OfferStart" class="text-danger"></span>
+							<h3 class="productinfo">Action End</h3>
+							<input asp-for="OfferEnd" type="datetime-local" class="newuser" />
+							<span asp-validation-for="OfferEnd" class="text-danger"></span>
+							<h3 class="productinfo">Action price</h3>
+							<input type="text" asp-for="OfferPrice" class="newuser" />
+							<span asp-validation-for="OfferPrice" class="text-danger"></span>
+						</div>
+
+					}
+					else
+					{
+						<div class="form-group">
+							<h3 class="productinfo">Action Start</h3>
+							<input asp-for="OfferStart" type="datetime-local" class="newuser" />
+							<span asp-validation-for="OfferStart" class="text-danger"></span>
+							<h3 class="productinfo">Action End</h3>
+							<input asp-for="OfferEnd" type="datetime-local" class="newuser" />
+							<span asp-validation-for="OfferEnd" class="text-danger"></span>
+							<h3 class="productinfo">Action price</h3>
+							<input type="text" asp-for="OfferPrice" value="0" class="newuser" />
+							<span asp-validation-for="OfferPrice" class="text-danger"></span>
+						</div>
+
+					}
+
+					<h2 class="productdetails">Product categories</h2>
+					@foreach (var SingleCat in Model.ListOfAllCategories)
+					{
+						var containsItem = Model.ProductCategories.Any(item => item.CategoryName == SingleCat.CategoryName);
+						if (containsItem)
+						{
+							<input type="checkbox" name="SelectedCategory" value="@SingleCat.CategoryId" class="categoryselect" checked="checked" />
+							<p>@SingleCat.CategoryName</p>
+						}
+						else
+						{
+							<input type="checkbox" name="SelectedCategory" value="@SingleCat.CategoryId" class="categoryselect" />
+							<p>@SingleCat.CategoryName</p>
+						}
+					}
+				</div>
+			</form>
+		}
+	</div>
+</section>

@@ -1,0 +1,151 @@
+﻿@{
+	ViewData["Title"] = "SingleOrder";
+	Layout = "~/Views/Shared/_BackendLayout.cshtml";
+}
+
+<!-- ProductViewModel-->
+@model RicksWebWorld.ViewModels.UserOrderViewModel;
+
+<section class="main-content singleproduct">
+
+	@if (Model.OrderId == 0)
+	{
+		<h1 class="page-title">Add new Order</h1>
+	}
+	else
+	{
+		<h1 class="page-title">Update Order</h1>
+	}
+
+	<div class="row">
+		@if (Model.OrderId == 0)
+		{
+			<form asp-controller="Order" asp-action="CreateOrderAdmin" method="post">
+				<div class="col-md-6">
+					<h2 class="secondary-heading">Customer data</h2>
+					<input asp-for="Username" placeholder="Username" />
+					<span asp-validation-for="Username" class="text-danger"></span>
+
+					<input asp-for="SendAddress" value="" placeholder="Address" />
+					<span asp-validation-for="SendAddress" class="text-danger"></span>
+
+					<input asp-for="SendZipcode" value="" placeholder="Zipcode" />
+					<span asp-validation-for="SendZipcode" class="text-danger"></span>
+
+					<input asp-for="SendPlace" value="" placeholder="Place" />
+					<span asp-validation-for="SendPlace" class="text-danger"></span>
+
+					<textarea asp-for="OrderDescription" placeholder="Notes"></textarea>
+
+					<button type="submit" class="addproduct">Add Order</button>
+				</div>
+				<div class="col-md-6">
+					<div class="listofproducts">
+						<h2 class="secondary-heading">Products in Order</h2>
+						@foreach (var item in Model.ProductsInSystem)
+						{
+							<div class="single-product">
+								<input type="checkbox" name="SelectedProduct" class="productselect" value="@item.ProductName" />
+								<p>@item.ProductName</p>
+							</div>
+						}
+					</div>
+				</div>
+			</form>
+		}
+		else
+		{
+			<form asp-controller="Order" asp-action="Update" method="post">
+				<div class="col-md-6">
+					<h2 class="secondary-heading">Customer Data</h2>
+
+					<input asp-for="Username" value="@Model.Username" disabled="disabled" />
+					<span asp-validation-for="Username" class="text-danger"></span>
+
+					<input asp-for="Email" value="@Model.Email" placeholder="Email" disabled="disabled" />
+					<span asp-validation-for="Email" class="text-danger"></span>
+
+					<input asp-for="SendAddress" value="@Model.SendAddress" placeholder="Address" />
+					<span asp-validation-for="SendAddress" class="text-danger"></span>
+
+					<input asp-for="SendZipcode" value="@Model.SendZipcode" placeholder="=Zipcode" />
+					<span asp-validation-for="SendZipcode" class="text-danger"></span>
+
+					<input asp-for="SendPlace" value="@Model.SendPlace" placeholder="Place" />
+					<span asp-validation-for="SendPlace" class="text-danger"></span>
+
+					<textarea asp-for="OrderDescription" placeholder="Notes" value="@Model.OrderDescription"></textarea>
+					<input type="hidden" value="@Model.OrderId" name="OrderToEdit" />
+					<button type="submit" class="addproduct">Edit Order</button>
+
+
+					<div class="orderdetails">
+						<div class="productdetails">
+							<div class="row">
+								<div class="col-md-6"><p class="order-heading">Product</p></div>
+								<div class="col-md-3"><p class="order-heading">Price</p></div>
+								<div class="col-md-3"><p class="order-heading">Amount</p></div>
+
+								@foreach (var singleitem in Model.ShoppingCart.ItemsInCart)
+								{
+
+									<div class="single-order-product">
+										<div class="col-md-6">@singleitem.Product.ProductName</div>
+										<div class="col-md-3">@singleitem.CurrentPrice()</div>
+										<div class="col-md-3">@singleitem.Quantity</div>
+									</div>
+
+								}
+							</div>
+
+						</div>
+						<div class="ordertotals">
+							<div class="row">
+								<div class="col-md-12">
+									<p><span class="order-heading">Subtotal:</span> @Model.ShoppingCart.Subtotal()</p>
+								</div>
+								<div class="col-md-12">
+									<p><span class="order-heading">Tax(21%):</span> @Model.ShoppingCart.BTW()</p>
+								</div>
+								<div class="col-md-12">
+									<p><span class="order-heading">Shipping:</span> 4.50</p>
+								</div>
+								<div class="col-md-12">
+									<p><span class="order-heading">Grand total:</span> @Model.ShoppingCart.GrandTotal()</p>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="listofproducts">
+						<h2 class="secondary-heading">Products in Order</h2>
+						@foreach (var item in Model.ProductsInSystem)
+						{
+							if (Model.ShoppingCart.ItemsInCart.Any(p => p.Product.ProductId == item.ProductId))
+							{
+								<div class="single-product">
+									<input type="checkbox" name="SelectedProduct" class="productselect" checked="checked" value="@item.ProductName" />
+									<p>@item.ProductName</p>
+								</div>
+							}
+							else
+							{
+								<div class="single-product">
+									<input type="checkbox" name="SelectedProduct" class="productselect" value="@item.ProductName" />
+									<p>@item.ProductName</p>
+								</div>
+							}
+						}
+					</div>
+				</div>
+			</form>
+		}
+	</div>
+
+</section>
+
+@section Scripts {
+	@await Html.PartialAsync("_ValidationScriptsPartial")
+}

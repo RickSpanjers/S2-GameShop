@@ -1,0 +1,130 @@
+﻿@{
+	ViewBag.Title = "UserOverview";
+	Layout = "~/Views/Shared/_BackendLayout.cshtml";
+}
+@model RicksWebWorld.ViewModels.UserRoleViewModel
+
+<section class="main-content">
+	<h1 class="page-title singleuser">User</h1>
+	<div class="row">
+		@if (Model.Username == null)
+		{
+			<form asp-controller="User" asp-action="Add" method="post">
+				<div class="col-md-8">
+					<h2 class="secondary-heading">Add new User</h2>
+
+					<label>Firstname</label>
+					<input type="text" asp-for="FirstName" class="input-login" />
+					<span asp-validation-for="FirstName" class="text-danger"></span>
+
+					<label>Lastname</label>
+					<input type="text" asp-for="LastName" class="input-login" />
+					<span asp-validation-for="LastName" class="text-danger"></span>
+
+					<label>E-mailaddress</label>
+					<input type="text" asp-for="Email" class="input-login" />
+					<span asp-validation-for="Email" class="text-danger"></span>
+
+					<label>Username</label>
+					<input type="text" asp-for="Username" class="input-login" />
+					<span asp-validation-for="Username" class="text-danger"></span>
+
+					<label>Password</label>
+					<input type="password" asp-for="Password" class="input-login" />
+					<span asp-validation-for="Password" class="text-danger"></span>
+
+					<label>Address</label>
+					<input type="text" asp-for="Address" class="input-login" />
+					<span asp-validation-for="Address" class="text-danger"></span>
+
+					<label>Zipcode</label>
+					<input type="text" asp-for="Zipcode" class="input-login" />
+					<span asp-validation-for="Zipcode" class="text-danger"></span>
+
+					<label>Place</label>
+					<input type="text" asp-for="Place" class="input-login" />
+					<span asp-validation-for="Place" class="text-danger"></span>
+
+					<button type="submit" class="save">Add new user to WebWorld</button>
+				</div>
+				<div class="col-md-4">
+					<h2 class="secondary-heading">User Role</h2>
+					@{
+						foreach (var SingleRole in Model.AllUserRoles)
+						{
+							<input type="checkbox" name="SelectedRole" value="@SingleRole.RoleId" class="categoryselect" />
+							<p class="userrole">@SingleRole.RoleName</p>
+						}
+					}
+				</div>
+			</form>
+		}
+
+		else
+		{
+			<form asp-controller="User" asp-action="Update" method="post">
+				<div class="col-md-8">
+					<h2 class="secondary-heading">Edit Existing User</h2>
+
+					<label>Firstname</label>
+					<input type="hidden" name="UserToEdit" value="@Model.Username" />
+					<input type="text" asp-for="FirstName" value="@Model.Username" class="input-login" />
+					<span asp-validation-for="FirstName" class="text-danger"></span>
+
+					<label>Lastname</label>
+					<input type="text" asp-for="LastName" value="@Model.LastName" class="input-login" />
+					<span asp-validation-for="LastName" class="text-danger"></span>
+
+					<label>E-mailaddress</label>
+					<input type="text" asp-for="Email" value="@Model.Email" class="input-login" />
+					<span asp-validation-for="Email" class="text-danger"></span>
+
+					<label>Username</label>
+					<input type="text" asp-for="Username" value="@Model.Username" class="input-login" />
+					<span asp-validation-for="Username" class="text-danger"></span>
+
+					<label>Password</label>
+					<input type="password" asp-for="Password" class="input-login" />
+					<span asp-validation-for="Password" class="text-danger"></span>
+
+					<label>Address</label>
+					<input type="text" asp-for="Address" value="@Model.Address" class="input-login" />
+					<span asp-validation-for="Address" class="text-danger"></span>
+
+					<label>Zipcode</label>
+					<input type="text" asp-for="Zipcode" value="@Model.Zipcode" class="input-login" />
+					<span asp-validation-for="Zipcode" class="text-danger"></span>
+
+					<label>Place</label>
+					<input type="text" asp-for="Place" value="@Model.Place" class="input-login" />
+					<span asp-validation-for="Place" class="text-danger"></span>
+
+					<button type="submit" class="save">Update existing User in WebWorld</button>
+				</div>
+				<div class="col-md-4">
+					@{
+						<h2 class="secondary-heading">User Role</h2>
+						foreach (var SingleRole in Model.AllUserRoles)
+						{
+							var containsItem = Model.RolesInUser.Any(item => item.RoleName == SingleRole.RoleName);
+							if (containsItem)
+							{
+								<input type="checkbox" name="SelectedRole" value="@SingleRole.RoleId" class="roleselect" checked="checked" />
+								<p>@SingleRole.RoleName</p>
+							}
+							else
+							{
+								<input type="checkbox" name="SelectedRole" value="@SingleRole.RoleId" class="roleselect" />
+								<p>@SingleRole.RoleName</p>
+							}
+						}
+					}
+				</div>
+			</form>
+		}
+	</div>
+</section>
+
+@section Scripts {
+	@await Html.PartialAsync("_ValidationScriptsPartial")
+}

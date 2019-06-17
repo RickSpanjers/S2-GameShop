@@ -1,0 +1,55 @@
+﻿@{
+	ViewData["Title"] = "OrderOverview";
+	Layout = "~/Views/Shared/_BackendLayout.cshtml";
+}
+
+@model RicksWebWorld.ViewModels.UserOrderViewModel ;
+
+<section class="main-content useroverview">
+	<h1 class="page-title">Orders</h1>
+	<div class="user-filters">
+		<select class="newuser" id="orderfilters">
+			<option value="Num">Sort Numerically</option>
+			<option value="Alpha">Sort Alphabetically</option>
+		</select>
+	</div>
+	<div class="user-options">
+		<a asp-action="Single" asp-controller="Order">New Order</a>
+	</div>
+	<div class="listofusers">
+		<div class="row">
+			<div class="col-md-12">
+				@foreach (var singleorder in Model.OrdersInSystem)
+				{
+					<div class="single-user-order">
+						<div class="col-md-12">
+							<form asp-controller="Order" asp-action="SingleEdit" method="post">
+								<div class="userlist second">
+									<div class="row">
+										<div class="col-md-2">
+											<p class="sort-id">@singleorder.OrderId</p>
+										</div>
+										<div class="col-md-10">
+											<p class="sort-email">@singleorder.User.Email</p>
+										</div>
+									</div>
+
+									<input type="hidden" name="orderToEdit" value="@singleorder.OrderId" />
+								</div>
+								<div class="userlist third">
+									<button type="submit" class="btn-reverse">Edit</button>
+								</div>
+							</form>
+							<form asp-controller="Order" asp-action="Delete" method="post">
+								<div class="userlist fourth">
+									<input type="hidden" name="orderToDelete" value="@singleorder.OrderId" />
+									<button type="submit" class="btn-reverse">Delete</button>
+								</div>
+							</form>						
+						</div>
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+</section>
