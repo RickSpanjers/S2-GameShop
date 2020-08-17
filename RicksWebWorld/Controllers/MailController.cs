@@ -28,7 +28,7 @@ namespace RicksWebWorld.Controllers
 		public async Task<IActionResult> SendContactMailAsync(ContactMailViewModel model)
 		{
 			//Set up sendgrid API
-			string apiKey = "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";
+			string apiKey = "";
 			SendGridClient client = new SendGridClient(apiKey);
 			EmailAddress from = new EmailAddress(model.Email, model.FullName);
 			EmailAddress to = new EmailAddress("Rick.spanjers@outlook.com", "RicksWebWorld");
@@ -48,7 +48,7 @@ namespace RicksWebWorld.Controllers
 		public async Task<IActionResult> ApplyNewsLetterAsync(string Email)
 		{
 			//Set up sendgrid API
-			string apiKey = "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";
+			string apiKey = "";
 			SendGridClient client = new SendGridClient(apiKey);
 			EmailAddress from = new EmailAddress(Email, "New Submission");
 			EmailAddress to = new EmailAddress("Rick.spanjers@outlook.com", "RicksWebWorld");
@@ -72,7 +72,7 @@ namespace RicksWebWorld.Controllers
 		public async Task<IActionResult> SendEmailConfirmation(UserRoleViewModel model)
 		{	
 			//Set up sendgrid API
-			string apiKey = "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";
+			string apiKey = "";
 			SendGridClient client = new SendGridClient(apiKey);
 			EmailAddress from = new EmailAddress("info@RicksWebWorld.nl", "RicksWebWorld");
 			EmailAddress to = new EmailAddress(model.Email);
@@ -103,7 +103,7 @@ namespace RicksWebWorld.Controllers
 		public async Task<IActionResult> SendResetPasswordMail(PasswordResetViewModel model)
 		{	
 			//Set up sendgrid API
-			string apiKey = "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";
+			string apiKey = "";
 			SendGridClient client = new SendGridClient(apiKey);
 			EmailAddress from = new EmailAddress("info@RicksWebWorld.nl", "RicksWebWorld");
 			EmailAddress to = new EmailAddress(model.Email);
@@ -131,7 +131,7 @@ namespace RicksWebWorld.Controllers
 		public async Task<IActionResult> OrderConfirmationMail(UserOrderViewModel model)
 		{
 			//Set up sendgrid API
-			string apiKey = "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";
+			string apiKey = "";
 			SendGridClient client = new SendGridClient(apiKey);
 			EmailAddress from = new EmailAddress("info@RicksWebWorld.nl", "RicksWebWorld");
 			EmailAddress to = new EmailAddress(model.Email);
