@@ -1,0 +1,81 @@
+﻿@{
+	ViewData["Title"] = "PermissionOverview";
+	Layout = "~/Views/Shared/_BackendLayout.cshtml";
+}
+@model RicksWebWorld.ViewModels.RolePermissionViewModel
+
+<section class="main-content">
+	<h1 class="page-title">Permissions</h1>
+	<div class="row">
+		<div class="col-md-4 category">
+			<h2 class="secondary-heading">Add new Permission</h2>
+			@if (Model.Name == null)
+			{
+				<form asp-controller="Permission" asp-action="Add" method="post">
+					<input type="text" asp-for="Name" placeholder="Name of Permission" class="productname" />
+					<span asp-validation-for="Name" class="text-danger"></span>
+					<textarea type="text" asp-for="Description" placeholder="Description" class="productdesc"></textarea>
+					<span asp-validation-for="Description" class="text-danger"></span>
+					<h3 class="third-heading">Add Permission to Role</h3>
+					@foreach (var SingleRole in Model.AllRolesInSystem)
+					{
+						<input type="checkbox" name="SelectedRole" class="categoryselect" value="@SingleRole.RoleId" />
+						<p>@SingleRole.RoleName</p>
+					}
+					<button type="submit" class="addproduct">Add Permission</button>
+				</form>
+			}
+			else
+			{
+				<form asp-controller="Permission" asp-action="Update" method="post">
+					<input type="hidden" name="PermissionToEdit" value="@Model.Id" />
+					<input type="text" asp-for="Name" value="@Model.Name" class="productname" />
+					<span asp-validation-for="Name" class="text-danger"></span>
+					<textarea type="text" asp-for="Description" value="@Model.Description" class="productdesc"></textarea>
+					<span asp-validation-for="Description" class="text-danger"></span>
+					<h3 class="third-heading">Add Permission to Role</h3>
+					@foreach (var SingleRole in Model.AllRolesInSystem)
+					{
+						var containsItem = Model.AllRolesWithPermission.Any(item => item.RoleName == SingleRole.RoleName);
+						if (containsItem)
+						{
+							<input type="checkbox" name="SelectedRole" class="categoryselect" value="@SingleRole.RoleId" checked="checked" />
+							<p>@SingleRole.RoleName</p>
+						}
+						else
+						{
+							<input type="checkbox" name="SelectedRole" class="categoryselect" value="@SingleRole.RoleId" />
+							<p>@SingleRole.RoleName</p>
+						}
+					}
+					<button type="submit" class="addproduct">Edit Permission</button>
+				</form>
+			}
+		</div>
+		<div class="col-md-8">
+			<h2 class="secondary-heading">Current Permissions</h2>
+			<div class="listofcategories">
+				@foreach (var SinglePermision in Model.AllPermissionsInSystem)
+				{
+					<div class="single-category">
+						<div class="col-md-12">
+							<form asp-controller="Permission" asp-action="OverviewEdit" method="post">
+								<input type="hidden" name="SelectedPermission" value="@SinglePermision.Id" />
+								<p class="product-name">@SinglePermision.Name</p>
+								<button type="submit" class="btn_categoryedit btn-reverse">Edit</button>
+							</form>
+							<form asp-controller="Permission" asp-action="Delete" method="post">
+								<input type="hidden" name="PermissionToDelete" value="@SinglePermision.Id" />
+								<button class="btn_categorydelete btn-reverse" type="submit">Delete</button>
+							</form>
+						</div>
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+</section>
+
+@section Scripts {
+	@await Html.PartialAsync("_ValidationScriptsPartial")
+}

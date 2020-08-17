@@ -1,0 +1,154 @@
+﻿@using Microsoft.AspNetCore.Http;
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>@ViewBag.Title</title>
+	<script src="~/lib/jquery/dist/jquery.js" type="text/javascript"></script>
+	<link href="~/css/site.css" rel="stylesheet" />
+	<link href="~/css/frontend.css" rel="stylesheet" />
+	<link href="~/css/shopping-cart.css" rel="stylesheet" />
+	<link href="~/css/reset.css" rel="stylesheet" />
+	<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+	<link href="~/css/animate.css" rel="stylesheet" />
+	<link href="~/css/responsive.css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link href="https://fonts.googleapis.com/css?family=Raleway:400,700|Roboto" rel="stylesheet">
+	<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
+</head>
+
+
+<body class="@ViewBag.Title">
+	<div class="site_header">
+		<nav class="navbar navbar-inverse">
+			<div class="container">
+				<div class="navbar-header">
+					<a asp-action="Index" asp-controller="Home"><img class="logo" src="~/images/logo-webworld.png" /></a>
+				</div>
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<div class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li><a asp-action="Index" asp-controller="Home">Home</a></li>
+						<li><a asp-action="About" asp-controller="Home">About us</a></li>
+						<li><a asp-action="Products" asp-controller="Home">Products</a></li>
+						<li><a asp-action="Blog" asp-controller="Home">Blog</a></li>
+						<li><a asp-action="Contact" asp-controller="Home">Contact</a></li>
+
+						@if (Context.Session.GetString("userId") == null)
+						{
+							<li><a asp-action="Login" asp-controller="User">Login</a></li>
+						}
+						else
+						{
+							<li><a asp-action="Logout" asp-controller="User">Logout</a></li>
+							<li class="cart">
+								<a asp-action="Cart" asp-controller="Cart" class="cd-cart items-added">
+									<span>
+										@if (Context.Session.GetString("cartItems") == null)
+										{
+											<p>0</p>
+										}
+										else
+										{
+											var result = Context.Session.GetString("cartItems");
+											<p>@result</p>
+										}
+									</span>
+								</a>
+							</li>
+						}
+
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</div>
+
+	<section class="site-inner">
+		@RenderBody()
+	</section>
+
+	<section class="webworld-footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-2">
+					<h4>Company</h4>
+					<a href="#">About us</a><br />
+					<a href="#">Blog</a><br />
+					<a href="#">Our Partners</a><br />
+					<a href="#">Work with us</a><br />
+				</div>
+				<div class="col-md-2">
+					<h4>Assistance</h4>
+					<a href="#">Contact us</a><br />
+					<a href="#">FAQs</a><br />
+					<a href="#">Shipping information</a><br />
+					<a href="#">Have a question? Ask us</a><br />
+				</div>
+				<div class="col-md-3">
+					<h4>Store location</h4>
+					<p>
+						1234 Fake Address Name<br />
+						Fake City Name<br />
+						Country 01234<br />
+						123 456 7890<br />
+					</p>
+					<a href="#">info@webworld.com</a>
+				</div>
+				<div class="col-md-5">
+					<h4>Sign up to our newsletter</h4>
+					<form asp-action="ApplyNewsLetterAsync" asp-controller="Mail">
+						<input name="Email" type="text" placeholder="E-mailaddress" />
+						<button type="submit">Subscribe</button>
+					</form>
+					<div class="social">
+						<a href="#" class="fa fa-youtube-play"></a>
+						<a href="#" class="fa fa-twitter"></a>
+						<a href="#" class="fa fa-facebook"></a>
+					</div>
+				</div>
+			</div>
+
+			<div class="bottom-part">
+				<div class="row">
+					<div class="col-md-6">
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis accumsan vitae.</p>
+						<p>Made by SpanDev Webdevelopment</p>
+						<p>© 2018 RicksWebWorld. All rights reserved</p>
+					</div>
+					<div class="col-md-6">
+						<div class="paymentmethods">
+							<div class="single-paymentmethod">
+								<img src="~/images/ideal.png" />
+							</div>
+							<div class="single-paymentmethod">
+								<img src="~/images/paypal.png" />
+							</div>
+							<div class="single-paymentmethod">
+								<img src="~/images/mastercard.png" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	@RenderSection("scripts", false)
+
+	@section Scripts {
+		@await Html.PartialAsync("_ValidationScriptsPartial")
+	}
+
+	<script src="~/js/site.js" type="text/javascript"></script>
+</body>
+</html>

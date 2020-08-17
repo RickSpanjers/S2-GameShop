@@ -1,0 +1,57 @@
+﻿@{
+	ViewData["Title"] = "RoleOverview";
+	Layout = "~/Views/Shared/_BackendLayout.cshtml";
+}
+
+@model RicksWebWorld.ViewModels.RoleViewModel
+
+<section class="main-content">
+	<h1 class="page-title">Roles</h1>
+	<div class="row">
+		<div class="col-md-4 category">
+			<h2 class="secondary-heading">Add new category</h2>
+
+			@if (Model.RoleName == null)
+			{
+				<form asp-controller="Role" asp-action="AddForms" method="post">
+					<input type="text" asp-for="RoleName" placeholder="Name of the Role" id="roleName" class="productname" />
+					<span asp-validation-for="RoleName" class="text-danger"></span>
+
+					<textarea asp-for="RoleDescription" class="productdesc" id="roleDesc" placeholder="Description"></textarea>
+					<span asp-validation-for="RoleDescription" class="text-danger"></span>
+
+					<button type="submit" class="addproduct" id="addrole">Add Role</button>
+				</form>
+			}
+			else
+			{
+				<form asp-controller="Role" asp-action="Update" method="post">
+					<input type="hidden" name="RoleToEdit" value="@Model.RoleId" />
+
+					<input type="text" asp-for="RoleName" value="@Model.RoleName" class="productname" />
+					<span asp-validation-for="RoleName" class="text-danger"></span>
+
+					<textarea asp-for="RoleDescription" class="productdesc" placeholder="@Model.RoleDescription"></textarea>
+					<span asp-validation-for="RoleDescription" class="text-danger"></span>
+
+					<button type="submit" id="addRole" class="addproduct">Update Role</button>
+				</form>
+			}
+		</div>
+		<div class="col-md-8">
+			<h2 class="secondary-heading">Current roles</h2>
+			<div class="listofcategories">
+				<div id="partial">
+					<div id="divLoader">
+						<img src="~/images/ajax-loader.gif" alt="Loader" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</section>
+
+@section Scripts {
+	@await Html.PartialAsync("_ValidationScriptsPartial")
+}

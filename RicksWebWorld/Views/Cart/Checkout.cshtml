@@ -1,0 +1,120 @@
+﻿@model RicksWebWorld.ViewModels.UserOrderViewModel
+@{
+	ViewData["Title"] = "Checkout";
+}
+
+<section class="shopping-cart">
+	<div class="container">
+		<div class="row">
+			<div class="row cart-body">
+				<div class="col-lg-12">
+					<!--SHIPPING METHOD-->
+					<form asp-controller="Order" asp-action="CreateOrder" method="post">
+						<div class="panel panel-info">
+							<div class="panel-heading">Address</div>
+							<div class="panel-body">
+								<div class="form-group">
+									<div class="col-md-12">
+										<h4>Shipping Address</h4>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-6 col-xs-12">
+										<strong>First Name:</strong>
+										<input type="text" asp-for="Firstname" placeholder="@Model.Firstname" class="form-control" />
+										<span asp-validation-for="Firstname" class="text-danger"></span>
+										<input type="hidden" name="OrderingUser" value="@Model.Username" />
+									</div>
+									<div class="col-md-6 col-xs-12">
+										<strong>Last Name:</strong>
+										<input type="text" asp-for="Lastname" placeholder="@Model.Lastname" class="form-control" />
+										<span asp-validation-for="Lastname" class="text-danger"></span>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-12">
+										<strong>Email Address:</strong>
+									</div>
+									<div class="col-md-12">
+										<input type="text" asp-for="Email" placeholder="@Model.Email" class="form-control" />
+										<span asp-validation-for="Email" class="text-danger"></span>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-12">
+										<strong>Address:</strong>
+									</div>
+									<div class="col-md-12">
+										<input type="text" asp-for="SendAddress" placeholder="@Model.SendAddress" class="form-control" />
+										<span asp-validation-for="SendAddress" class="text-danger"></span>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-12">
+										<strong>Zip / Postal Code:</strong>
+									</div>
+									<div class="col-md-12">
+										<input type="text" asp-for="SendZipcode" placeholder="@Model.SendZipcode" class="form-control" />
+										<span asp-validation-for="SendZipcode" class="text-danger"></span>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-12">
+										<strong>City:</strong>
+									</div>
+									<div class="col-md-12">
+										<input type="text" asp-for="SendPlace" placeholder="@Model.SendPlace" class="form-control" />
+										<span asp-validation-for="SendPlace" class="text-danger"></span>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-12">
+										<strong>Notes:</strong>
+									</div>
+									<div class="col-md-12">
+										<textarea asp-for="OrderDescription" value="None"></textarea>
+									</div>
+								</div>
+
+							</div>
+						</div>
+						<!--SHIPPING METHOD END-->
+						<!--CART PAYMENT-->
+						<div class="panel panel-info">
+							<div class="panel-heading">
+								<span>
+									<i class="glyphicon glyphicon-lock"></i>
+								</span> Secure Payment
+							</div>
+							<div class="panel-body">
+								<div class="form-group">
+									<div class="col-md-12">
+										<strong>Payment Method:</strong>
+									</div>
+									<div class="col-md-12">
+										<select id="PaymentType" name="PaymentType" class="form-control">
+											@foreach (var method in Model.PaymentMethods)
+											{
+												<option value="@method.PaymentMethodId">@method.PaymentMethodName</option>
+											}
+										</select>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-6 col-sm-6 col-xs-12">
+										<button type="submit" class="btn btn-primary btn-submit-fix">Place Order</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- PAYMENT END-->
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+@section Scripts {
+	@await Html.PartialAsync("_ValidationScriptsPartial")
+}

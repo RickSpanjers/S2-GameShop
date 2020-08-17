@@ -1,0 +1,60 @@
+﻿@{
+	ViewData["Title"] = "OptionsOverview";
+	Layout = "~/Views/Shared/_BackendLayout.cshtml";
+}
+@model RicksWebWorld.ViewModels.OptionsViewModel
+<section class="main-content">
+	<h1 class="page-title">Options</h1>
+	<div class="row">
+		<div class="col-md-4 category">
+			@if (Model.PaymentMethodName == null)
+			{
+				<h2 class="secondary-heading">Add new payment method</h2>
+				<form asp-controller="PaymentMethod" asp-action="Add" method="post">
+					<input type="text" asp-for="PaymentMethodName" placeholder="Name of the Payment method" class="productname" />
+					<span asp-validation-for="PaymentMethodName" class="text-danger"></span>
+					<textarea asp-for="PaymentMethodDescription" class="productdesc" placeholder="Description"></textarea>
+					<span asp-validation-for="PaymentMethodDescription" class="text-danger"></span>
+					<button type="submit" class="addproduct">Add Payment Method</button>
+				</form>
+			}
+			else
+			{
+				<form asp-controller="PaymentMethod" asp-action="Update" method="post">
+					<h2 class="secondary-heading">Edit payment method</h2>
+					<input type="hidden" name="paymentMethodToEdit" value="@Model.PaymentMethodId" />
+					<input type="text" asp-for="PaymentMethodName" value="@Model.PaymentMethodName" class="productname" />
+					<span asp-validation-for="PaymentMethodName" class="text-danger"></span>
+					<textarea asp-for="PaymentMethodDescription" class="productdesc" placeholder="@Model.PaymentMethodDescription"></textarea>
+					<span asp-validation-for="PaymentMethodDescription" class="text-danger"></span>
+					<button type="submit" class="addproduct">Update Payment Method</button>
+				</form>
+			}
+		</div>
+		<div class="col-md-8">
+			<h2 class="secondary-heading">Current Payment Methods</h2>
+			<div class="listofcategories">
+				@foreach (var single in Model.AllMethodsInSystem)
+				{
+					<div class="single-category">
+						<div class="col-md-12">
+							<form asp-controller="PaymentMethod" asp-action="OverviewEdit" method="post">
+								<input type="hidden" name="selectedMethod" value="@single.PaymentMethodId" />
+								<p class="product-name">@single.PaymentMethodName</p>
+								<button type="submit" class="btn_categoryedit btn-reverse">Edit</button>
+							</form>
+							<form asp-controller="PaymentMethod" asp-action="Delete" method="post">
+								<input type="hidden" name="paymentMethodToDelete" value="@single.PaymentMethodId" />
+								<button class="btn_categorydelete btn-reverse" type="submit">Delete</button>
+							</form>
+						</div>
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+</section>
+
+@section Scripts {
+	@await Html.PartialAsync("_ValidationScriptsPartial")
+}

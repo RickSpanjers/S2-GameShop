@@ -1,0 +1,53 @@
+﻿@{
+	ViewBag.Title = "UserOverview";
+	Layout = "~/Views/Shared/_BackendLayout.cshtml";
+}
+@model RicksWebWorld.ViewModels.UserRoleViewModel
+
+<section class="main-content useroverview">
+	<h1 class="page-title">Users</h1>
+	<div class="user-filters">
+		<select class="newuser" id="userfilters">
+			<option value="AllRoles">All Roles</option>
+			@foreach (var SingleRole in Model.AllUserRoles)
+			{
+				<option value="@SingleRole.RoleName">@SingleRole.RoleName</option>
+			}
+		</select>
+	</div>
+	<div class="user-options">
+		<a asp-controller="User" asp-action="Single">Add user</a>
+	</div>
+	<div class="listofusers">
+		<div class="row">
+			<div class="col-md-12">
+				@foreach (var singleuser in Model.UsersInSystem)
+				{
+					<div class="single-user">
+						<div class="col-md-12">
+							@foreach (var singlerole in singleuser.RolesInUser)
+							{
+								<input type="hidden" value="@singlerole.RoleName" class="userrole" />
+							}
+							<form asp-controller="User" asp-action="SingleEdit" method="post">
+								<div class="userlist second">
+									<p>@singleuser.Username</p>
+									<input type="hidden" name="SelectedUser" value="@singleuser.Id" />
+								</div>
+								<div class="userlist third">
+									<button type="submit" class="btn-reverse">Edit</button>
+								</div>
+							</form>
+							<form asp-controller="User" asp-action="Delete" method="post">
+								<div class="userlist fourth">
+									<input type="hidden" name="UserToDelete" value="@singleuser.Id" />
+									<button type="submit" class="btn-reverse">Delete</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+</section>

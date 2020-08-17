@@ -1,0 +1,56 @@
+﻿@model RicksWebWorld.ViewModels.BlogOverviewViewModel
+@{
+	ViewData["Title"] = "Blog";
+}
+
+<section class="about-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8">
+				<h1>WebWorld Blog</h1>
+				<div class="listofPosts">
+					@{ 
+						var posts = Model.PostsInSystem;
+						posts.Sort((x, y) => y.Postdate.CompareTo(x.Postdate));
+					}
+					@foreach (var item in posts)
+					{
+						if (item.Status == 1)
+						{
+							<div class="single-post">
+								<div class="row">
+									<div class="col-md-6"><a asp-action="Post" asp-controller="Home" asp-route-Post="@item.Id"><img src="~/images/blog/@item.PostImage" /></a></div>
+									<div class="col-md-6">
+										<h2 class="blog-title"><a asp-action="Post" asp-controller="Home" asp-route-Post="@item.Id">@item.Title</a></h2>
+										<p class="blog-excerpt">@item.Excerpt</p>
+										<p class="written-date">Written on @item.Postdate</p>
+									</div>
+								</div>
+							</div>
+						}
+					}
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="contact-sidebar">
+					<h2>Contact us</h2>
+					<form asp-action="SendContactMailAsync" asp-controller="Mail">
+						<input asp-for="FullName" placeholder="Name" class="aboutusinput" />
+						<span asp-validation-for="FullName" class="text-danger"></span>
+
+						<input asp-for="Email" placeholder="E-mail" class="aboutusinput" />
+						<span asp-validation-for="Email" class="text-danger"></span>
+
+						<textarea asp-for="Details" class="aboutustextarea" placeholder="Message"></textarea>
+						<span asp-validation-for="Details" class="text-danger"></span>
+						<button type="submit" class="btn btn-primary btn-login">Send</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+@section Scripts {
+	@await Html.PartialAsync("_ValidationScriptsPartial")
+}

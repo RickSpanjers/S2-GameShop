@@ -1,0 +1,74 @@
+﻿@{
+	ViewBag.Title = "Categoryoverview";
+	Layout = "~/Views/Shared/_BackendLayout.cshtml";
+}
+@model RicksWebWorld.ViewModels.CategoryViewModel ;
+
+<section class="main-content">
+	<h1 class="page-title">Categories</h1>
+	<div class="row">
+		<div class="col-md-4 category">
+			<h2 class="secondary-heading">Add new category</h2>
+
+			@if (Model.CategoryName == null)
+			{
+				<form asp-controller="Category" asp-action="Add" method="post">
+					<input type="text" asp-for="CategoryName" placeholder="Name of category" class="productname" />
+					<span asp-validation-for="CategoryName" class="text-danger"></span>
+					<textarea asp-for="CategoryDesc" class="productdesc"></textarea>
+					<span asp-validation-for="CategoryDesc" class="text-danger"></span>
+
+					<h3 class="third-heading">Category Image</h3>
+					<input type="file" name="UploadedImage" />
+					<button type="submit" class="addproduct">Add Categorie</button>
+				</form>
+			}
+			else
+			{
+				<form asp-controller="Category" asp-action="Edit" method="post">
+					<input type="hidden" name="CategoryToEdit" value="@Model.CategoryId" />
+
+					<input type="text" asp-for="CategoryName" value="@Model.CategoryName" class="productname" />
+					<span asp-validation-for="CategoryName" class="text-danger"></span>
+					<textarea asp-for="CategoryDesc" value="@Model.CategoryDesc" class="productdesc"></textarea>
+					<span asp-validation-for="CategoryDesc" class="text-danger"></span>
+
+					<h3 class="third-heading">Category Image</h3>
+					<img class="categoryimage" src="~/images/categories/@Model.CategoryImg" />
+					<input type="file" name="UploadedImage" />
+					<button type="submit" class="addproduct">Update Category</button>
+
+				</form>
+			}
+
+
+		</div>
+		<div class="col-md-8">
+			<h2 class="secondary-heading">Current Categories</h2>
+			<div class="listofcategories">
+
+				@foreach (var singlecategory in Model.AllCategoriesInSystem)
+				{
+					<div class="single-category">
+						<div class="col-md-12">
+							<form asp-controller="Category" asp-action="OverviewEdit" method="post">
+								<input type="hidden" name="SelectedCategory" value="@singlecategory.CategoryId" />
+								<p class="product-name">@singlecategory.CategoryName</p>
+								<button type="submit" class="btn_categoryedit btn-reverse">Edit</button>
+							</form>
+
+							<form asp-controller="Category" asp-action="Delete" method="post">
+								<input type="hidden" name="CategoryToDelete" value="@singlecategory.CategoryId" />
+								<button class="btn_categorydelete btn-reverse" type="submit">Delete</button>
+							</form>
+						</div>
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+</section>
+
+@section Scripts {
+	@await Html.PartialAsync("_ValidationScriptsPartial")
+}

@@ -1,0 +1,60 @@
+﻿@model RicksWebWorld.ViewModels.ProductCategoryViewModel
+@{
+	ViewBag.Title = "ProductOverview";
+	Layout = "~/Views/Shared/_BackendLayout.cshtml";
+}
+<section class="main-content productoverview">
+	<h1 class="page-title">Products</h1>
+	<div class="user-filters">
+		<select class="newuser" id="productfilter">
+			<option value="AllCategories">All Categories</option>
+			<option value="Offer">Special offer products</option>
+			@foreach (var SingleCat in Model.ListOfCategories)
+			{
+				<option value="@SingleCat.CategoryId">@SingleCat.CategoryName</option>
+			}
+		</select>
+	</div>
+	<div class="user-options">
+		<a asp-action="Single" asp-controller="Product">Add Product</a>
+	</div>
+	<div class="listofproducts">
+		<div class="row">
+			<div class="col-md-12">
+				@foreach (var singleproduct in Model.ListOfProducts)
+				{
+					<div class="single-product">
+						<div class="col-md-12">
+							<p class="product-name">@singleproduct.ProductName</p>
+
+							@foreach (var singlecategory in singleproduct.ProductCategories)
+							{
+								<input type="hidden" class="productcategory" value="@singlecategory.CategoryId" />
+							}
+
+
+							<!--Special Offer Indication-->
+							@if (singleproduct.IsSpecialOffer == true)
+							{
+								<input type="hidden" class="hasOffer" value="Offer" />
+							}
+
+							<form asp-controller="Product" asp-action="Delete" method="post">
+								<div class="deleteproduct">
+									<input type="hidden" name="ProductToDelete" value="@singleproduct.ProductId" />
+									<button type="submit" class="btn-reverse">Delete</button>
+								</div>
+							</form>
+							<form asp-controller="Product" asp-action="SingleEdit" method="post">
+								<div class="editproduct">
+									<input type="hidden" name="SelectedProduct" value="@singleproduct.ProductId" />
+									<button type="submit" class="btn-reverse">Edit</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+</section>

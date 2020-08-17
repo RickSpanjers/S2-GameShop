@@ -1,0 +1,244 @@
+﻿/* Global settings */
+/* Global "table" column settings */
+.product-image {
+	float: left;
+	width: 20%;
+}
+
+body.Checkout input[type="text"], select {
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+	margin-bottom: 0px;
+	margin-bottom: 20px;
+}
+
+.product-details {
+	float: left;
+	width: 37%;
+}
+
+.product-price {
+	float: left;
+	width: 12%;
+}
+
+.product-quantity {
+	float: left;
+	width: 10%;
+}
+
+.product-removal { float: right; }
+
+.product-line-price {
+	float: left;
+	width: 12%;
+}
+
+body.Cart .product .product-image img {
+	padding-right: 30px;
+	width: 100%;
+}
+
+body.Cart .product:hover { background-color: #f1f1f1; }
+
+div.shopping-cart {
+	background-color: #fff;
+	border: 2px solid #f1f1f1;
+	border-radius: 5px;
+	display: inline-block;
+	padding: 3rem;
+	width: 100%;
+}
+
+/* This is used as the traditional .clearfix class */
+
+.group:before, .shopping-cart:before, .column-labels:before, .product:before, .totals-item:before,
+.group:after,
+.shopping-cart:after,
+.column-labels:after,
+.product:after,
+.totals-item:after {
+	content: '';
+	display: table;
+}
+
+.group:after, .shopping-cart:after, .column-labels:after, .product:after, .totals-item:after { clear: both; }
+
+.group, .shopping-cart, .column-labels, .product, .totals-item { zoom: 1; }
+
+
+label { color: #aaa; }
+
+/* Column headers */
+
+.column-labels label {
+	border-bottom: 1px solid #eee;
+	margin-bottom: 15px;
+	padding-bottom: 15px;
+}
+
+.column-labels .product-image, .column-labels .product-details, .column-labels .product-removal { text-indent: -9999px; }
+
+/* Product entries */
+
+body.Cart .product {
+	border-bottom: 1px solid #eee;
+	min-height: 115px;
+	padding-bottom: 10px;
+	padding-top: 10px;
+}
+
+body.Cart .product .product-image { text-align: center; }
+
+
+
+
+body.Cart .product .product-details .product-description {
+	line-height: 1.4em;
+	margin: 5px 20px 5px 0;
+}
+
+body.Cart .product .product-quantity input { width: 40px; }
+
+.product .remove-product {
+	background-color: #c66;
+	border: 0;
+	border-radius: 3px;
+	color: #fff;
+	font-size: 12px;
+	padding: 4px 8px;
+}
+
+body.Cart .product .remove-product:hover { background-color: #a44; }
+
+/* Totals section */
+
+.totals { margin-top: 20px; }
+
+.totals .totals-item {
+	clear: both;
+	margin-bottom: 10px;
+	width: 100%;
+}
+
+.totals .totals-item label {
+	clear: both;
+	float: left;
+	text-align: right;
+	width: 79%;
+}
+
+.totals .totals-item .totals-value {
+	float: right;
+	text-align: right;
+	width: 21%;
+}
+
+
+.checkout {
+	background-color: #6b6;
+	border: 0;
+	border-radius: 3px;
+	color: #fff;
+	float: right;
+	font-size: 16px;
+	padding: 6px 25px;
+}
+
+.checkout:hover { background-color: #494; }
+
+/* Make adjustments for tablet */
+
+@media screen and (max-width: 650px) {
+	.shopping-cart {
+		border-top: 1px solid #eee;
+		margin: 0;
+		padding-top: 20px;
+	}
+
+	.column-labels { display: none; }
+
+	body.Cart .product-image {
+		float: right;
+		width: auto;
+	}
+
+	body.Cart .product-image img { margin: 0 0 10px 10px; }
+
+	.product-details {
+		float: none;
+		margin-bottom: 10px;
+		width: auto;
+	}
+
+	.product-price {
+		clear: both;
+		width: 70px;
+	}
+
+	.product-quantity { width: 100px; }
+
+	.product-quantity input { margin-left: 20px; }
+
+
+	.product-removal { width: auto; }
+}
+
+/* Make more adjustments for phone */
+
+@media screen and (max-width: 350px) {
+	.product-removal { float: right; }
+
+	.product-line-price {
+		clear: left;
+		float: right;
+		margin-top: 10px;
+		width: auto;
+	}
+
+	.totals .totals-item label { width: 60%; }
+
+	.totals .totals-item .totals-value { width: 40%; }
+}
+
+
+/*Icons*/
+
+.cd-cart.items-added span {
+	-moz-transform: scale(1);
+	-ms-transform: scale(1);
+	-o-transform: scale(1);
+	-webkit-transform: scale(1);
+	transform: scale(1);
+}
+
+.cd-cart span {
+	-moz-transform: scale(0);
+	-moz-transition: -moz-transform 0.2s 0s;
+	-ms-transform: scale(0);
+	-o-transform: scale(0);
+	-webkit-transform: scale(0);
+	-webkit-transition: -webkit-transform 0.2s 0s;
+	background-color: #46b29d;
+	border-radius: 50%;
+	color: #ffffff;
+	font-size: 1rem;
+	font-weight: bold;
+	height: 18px;
+	line-height: 18px;
+	position: absolute;
+	right: 5px;
+	text-align: center;
+	top: 2px;
+	transform: scale(0);
+	transition: transform 0.2s 0s;
+	width: 18px;
+}
+
+
+.cd-cart {
+	background: url(../images/cd-icon-cart.svg) no-repeat center center;
+	height: 50px;
+	width: 50px;
+	z-index: 2;
+}

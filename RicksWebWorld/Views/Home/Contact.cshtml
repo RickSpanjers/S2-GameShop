@@ -1,0 +1,50 @@
+﻿@model RicksWebWorld.ViewModels.ContactMailViewModel
+@{
+	ViewData["Title"] = "Contact";
+
+}
+
+<section class="contact-content">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-5">
+				<h1 class="contacth1">Contact</h1>
+				<p>RicksWebWorld</p>
+				<p>Vallgatan 30</p>
+				<p>411 16 Goteiborg</p>
+				<div class="subcontent">
+					<span class="fa fa-phone"></span><a href="#">+46 (0)13 33 35 000</a><br />
+					<span class="fa fa-envelope"></span><a href="#">info@rickswebworld.com</a><br />
+					<span class="fa fa-twitter"></span><a href="#">RicksWebWorld</a><br />
+					<span class="fa fa-facebook"></span><a href="#">/RicksWebWorld</a><br />
+				</div>
+			</div>
+			<div class="col-md-7">
+				<div class="contactform">
+					<h2 class="contacth2">Want to contact us?</h2>
+					<form asp-action="SendContactMailAsync" asp-controller="Mail">
+
+						<h3 class="contacth3">Full Name</h3>
+						<input asp-for="FullName" placeholder="Name" class="aboutusinput" />
+						<span asp-validation-for="FullName" class="text-danger"></span>
+
+						<h3 class="contacth3">E-mail</h3>
+						<input asp-for="Email" placeholder="E-mail" class="aboutusinput" />
+						<span asp-validation-for="Email" class="text-danger"></span>
+
+						<h3 class="contacth3">Message</h3>
+						<textarea asp-for="Details" class="textarea-contact" placeholder="Message"></textarea>
+						<span asp-validation-for="Details" class="text-danger"></span>
+
+						<hr class="contacthr" />
+						<button type="submit" class="btncontactsend">Send</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+@section Scripts {
+	@await Html.PartialAsync("_ValidationScriptsPartial")
+}
